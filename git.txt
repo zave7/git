@@ -1,0 +1,299 @@
+Git의 영역 정리 (feat.생활코딩)
+
+1. Working Directory(작업영역)
+실제 프로젝트 디렉토리, git 이력과 관련된 정보가 저장되어있는 .git을 제외한 모든 영역을 말함
+실제 코드를 수정하고 추가하는 변경이 이루어지는 영역
+
+2. Repository(저장소)
+파일이나 폴더를 변경 이력별로 저장해 두는 곳
+.git 디렉토리 내에 존재함
+Local Repository : 내 PC에 파일이 저장되는 개인 저장소
+Remote Repository : 파일이 원격 저장소 전용 서버에서 관리되며 여러 사람이 함께 공유하기 위한 저장소
+
+3. Index
+Working Directory 에서 Repository로 정보가 저장되기 전 준비 영역
+파일 상태를 기록, 스테이징 한다고도 표현함, Staging Area로 불리기도함
+.git/index 파일로 관리됨.
+git add 명령어로 Working Directory 에서 Index 영역으로 정보가 저장됨
+git commit 명령어로 Index 영역에서 Repository로 정보가 저장됨
+
+4. Stash
+일반적인 Working Directory > Index > Repository 로 이루어지는 영역과는 다른 별개의 임시영역
+임시적으로 작업사항을 저장해놓고 나중에 꺼내올 수 있다.
+
+------------------------------------------------------------------------------------------------------------------
+GIT command    ->  모든 명령어의 옵션이나 자세한 내용은 명령어 + help 하면 나옵니다
+
+··············init·············
+
+git init
+- .git 디렉토리를 생성하고 현재 디렉토리를 버전관리 한다
+
+···············rm··············
+
+git rm -r .git
+- .git 폴더가 삭제되며 Git 로컬 저장소 지정을 해제한다
+
+·······························
+
+git config --global core.autocrlf true
+- 윈도우에서 warning: LF will be replaced by CRLF 오류 시
+- 시스템 전체가 아닌 해당 프로젝트에만 적용할 때는 global 옵션을 빼준다
+
+·······························
+
+git status
+- 변화 상태 확인 tracked, untracked, modified 등등
+
+·······························
+
+git add [filename]
+- 해당 파일을 tracked 하는 명령
+- 파일이 수정되어서 commit 하기 전에도 해야한다 (커밋 대기상태에 들어간다, 스테이징)
+
+git add -p
+- modified된 파일의 수정 부분을 단위별로 나누어서 추가할지 안할지 선택하게 한다
+- 변경사항 하나의 단위를 hunk라고 한다.
+- hunk 단위로 추가할지 말지 선택한다.
+- ?를 입력하면 각 명령어를 볼 수 있다
+- y 는 해당 hunk를 스테이징에 추가하고, n 은 추가하지 않고 다음 hunk를 보여준다.
+- q 를 입력하면 add 과정을 종료한다.
+
+·······························
+
+git config --global user.name "name"
+git config --global user.email email
+- 작업하는 개발자의 정보 명시
+
+·······························
+
+git commit 
+- 커밋 메세지를 입력하는 창으로  
+
+git commit -v
+- 커밋하는 변경사항을 한번 더 보여준다
+- 커밋 메세지를 입력하는 화면 아래 코드 diff
+
+git commit -a
+- 스테이징된 모든 파일을 커밋
+
+git commit -m "comment"
+- 커밋 메세지를 한번에 입력
+
+·······························
+
+git log
+- 커밋의 역사 확인
+- 나갈 때는 q
+
+git log -p
+- 각각의 커밋과 커밋 사이에 소스상의 차이점 확인
+※ 왜 깃은 add 과정을 거치게 하는지
+- 작업한 내용중 commit을 할 것들만 추려서 선택적 커밋 가능
+※ stage area -> 커밋 대기상태, 스테이지 위에 있는 파일들이 버전이 된다
+※ repository 저장소
+
+git log [비교브랜치1]..[비교브랜치2]
+- 2에는 없고 1에 있는 커밋을 보여줌
+
+git log --branch --graph --decorate --oneline
+- 로그에 모든 브랜치를 표시하고, 그래프로 표현하고, 브랜치 명을 표시하고, 한줄로 표시
+- 쓰고싶은 것만 골라서 쓸 수 있음
+
+·······························
+
+git diff
+- Working Directory와 index 영역 사이의 변경사항 표시
+- add 가 안된 상태에서 변경점이 확인된다
+
+git diff --cached
+- index영역과 Repository 영역을 비교하여 변경사항을 표시
+- add 가 된 상태에서 변경점이 확인된다
+
+git diff [branch-name1] [branch-name2]
+- 로컬의 브랜치간 코드 비교
+
+git diff [branch-name] [origin/branch-name]
+- 로컬 브랜치와 원격 브랜치간의 비교
+
+git diff [커밋 해시아이디] [커밋해시아이디]
+- 커밋끼리 비교
+
+git diff [비교대상1]..[비교대상2]
+- 1과 2의 차이점 비교 ..이 들어간다
+
+·······························
+
+git branch
+- 로컬 브랜치의 목록 확인
+
+git branch [branch-name]
+- 로컬 브랜치 생성
+
+git branch -d [branch-name]
+- 브랜치 삭제
+
+git branch -D [branch-name]
+- 병합하지 않은 브랜치를 강제 삭제
+
+·······························
+
+git checkout branch-name
+- 해당 브랜치로 전환(체크아웃)
+
+git checkout -b branch-name
+- 브랜치를 생성하고 전환까지
+
+·······························
+
+git merge branch-name
+- 현재 브랜치에 해당 브랜치를 병합
+※ 3 way merge 라는 기법으로 병합
+
+·······························
+
+git remote add [remote-name] [원격저장소주소]
+- 원격저장소 설정
+
+git remote -v
+- 현재 원격저장소로 설정된 목록 확인
+
+git remote show [remote-name]
+- 리모트 저장소의 구체적인 정보를 확인
+- 브랜치명을 생략하고 git push 명령을 실행 할 때 어떤 브랜치가 어떤 브랜치로 
+push 되는지도 보여준다
+
+git remote rename test1 test2
+- 리모트 이름을 test1 에서 test2 로 변경
+
+git remote rm origin
+- origin 리모트 저장소 삭제
+
+·······························
+
+git push origin master
+- 원격 저장소에 푸쉬 (origin에 master 브랜치로)
+
+git push origin v1.0.3
+- 원격 저장소 origin에 v1.0.3 태그 올리기
+
+git push origin --tags
+- 모든 태그 올리기
+
+git push origin :v1.0.0
+- 원격 저장소에 올라간 태그 v1.0.0 삭제
+
+·······························
+
+git clone /로컬/저장소/경로
+- 로컬 저장소를 복제
+
+git clone 사용자명@호스트:/원격/저장소/경로
+-원격 서버의 저장소 복제
+
+git clone https://github.com/zave7/develop.git 
+- 깃허브 서버의 저장소 복제
+
+·······························
+
+git fetch [remote-name]
+- 로컬에는 없지만, 리모트 저장소에는 있는 변경된 데이터를 모두 가져온다
+- 자동으로 merge 하지 않는다. 그래서 수동으로 해줘야 한다.
+
+·······························
+
+git rm [Filename]
+- 원격 저장소와 로컬 저장소에 있는 파일을 삭제한다
+
+git rm --cached [Filename]
+- 원격 저장소에 있는 파일만 삭제한다.
+
+git rm --cached .idea/modules.xml
+- .idea/modules.xml 파일 삭제
+
+git rm --cached -r .idea/ 
+- .idea 폴더 하위의 모든 파일 삭제
+
+·······························
+
+git config --global gui.encoding utf-8
+- gitk 한글이 깨지는 경우
+
+git config core.quotepath false
+- 이 설정은 일반적이지 않은 문자를 탈출문자로 처리하는 기능수행
+그래서 한글 앞에 탈출 문자를 붙인 탓에 이런 문제가 발생
+
+·······························
+
+git tag
+- 이미 만들어진 태그가 있는지 확인
+
+git tag -l v1.4.2.*
+- v1.4.2.1	패턴을 사용해서 태그 검색
+  v1.4.2.2
+  v1.4.2.3
+  v1.4.2.4
+
+※ tag 에는 Lightweight 태그와 Annotated 태그로 두 종류가 있다.
+  Lightweight 태그는 단순히 특정 커밋에 대한 포인터일 뿐이다.
+  Annotated 태그는 태그를 만든사람의 이름, 이메일, 태크만든 날짜, 태크 메세지도 저장
+  이 모든 정보를 저장해둬야 할 때에만 Annotated 태그를 추천한다.
+  단순한 태그는 Lightweight 태그
+
+git tag -a v1.4 -m "my version 1.4"
+- Annotated 태그는 옵션 -a 추가하고 comment 남기기 가능
+
+git show v1.4
+- 태그 v1.4의 정보와 커밋 정보 확인
+
+··········.gitignore·············
+※ .gitignore 이란?
+  - Project에 원하지 않는 파일들을 Git에서 제외시킬수 있는 설정 File이다.
+  - 항상 최상위 directory에 존재해야한다.
+
+  ex) 	# : comments
+
+	# no .a files
+	*.a
+
+	# but do track lib.a, even though you're ignoring .a files above
+	!lib.a
+
+	# only ignore the TODO file in the current directory, not subdir/TODO
+	/TODO
+
+	# ignore all files in the build/ directory
+	build/
+
+	# ignore doc/notes.txt, but not doc/server/arch.txt
+	doc/*.txt
+
+	# ignore all .pdf files in the doc/ directory
+	doc/**/*.pdf
+
+※ .gitignore File을 만들고 commit하면 적용된다.
+  원격저장소의 경우 .gitignore File을 같이 push 하면 적용된다.
+  - 제대로 적용되지 않을 수 있어서 
+	( git rm -r --cached .
+	  git add .
+	  git commit -m "Apply .gitignore" )를 해준다
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
