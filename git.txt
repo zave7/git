@@ -1,4 +1,4 @@
-
+﻿
 [D2Coding 글꼴에 최적화]
 ------------------------------------------------------------------------------------------------------------------
 최초의 깃 커밋 메세지 !!
@@ -246,7 +246,8 @@ git branch -d [branch-name]
 git branch -D [branch-name]
 - 병합하지 않은 브랜치를 강제 삭제
 
-
+git branch -a 
+- 현재 생성된 모든 local branch와 remote branch 확인
 
 ·······························
 ··········· checkout ··········		(체크아웃)
@@ -266,6 +267,9 @@ git checkout --[Filename]
 git checkout .
 - working directory에서 수정한 파일(git add이전)을 현재 버전으로 되돌리기
 
+git checkout -f 
+- 아직 커밋되지 않은 working directory 와 index(staging area) 수정사항 모두 삭제
+
 ·······························
 ············ merge ············		(병합)
 ·······························
@@ -275,8 +279,6 @@ git checkout .
 git merge branch-name
 - 현재 브랜치에 해당 브랜치를 병합
 ※ 3 way merge 라는 기법으로 병합
-
-
 
 ·······························
 ············ remote ···········		(원격 저장소)
@@ -322,6 +324,9 @@ git push origin --tags
 git push origin :v1.0.0
 - 원격 저장소에 올라간 태그 v1.0.0 삭제
 
+git push -u [remote-name] [local-branch]
+git push --set-upstream [remote-name] [local-branch]
+- 브랜치를 추적하도록 해서, 이후에 git push 만 입력해도 push 가능
 
 
 ·······························
