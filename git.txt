@@ -588,4 +588,21 @@ git config --global --add diff.guitool kdiff3
 git config --global --add difftool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
 git config --global --add difftool.kdiff3.trustExitCode false
 
+·······························
+··········· rebase ············		(리베이스)
+·······························
 
+git rebase -i 
+- 커밋의 이름이나 관련 이름을 부여할 수 있다
+- 충돌이 발생했을 경우, 유저가 해결한 후에 add하고 git rebase --continue를 해주면 순차적으로 마저 진행된다.(commit 안해도된다)
+
+·······························
+··········· reflog ············		(레프로그)
+·······························
+
+git reflog
+- HEAD가 거쳐간 모든 캐시의 리스트를 출력해준다. 
+  기본으로는 5개나 10개 정도를 보여준다
+- 작업 시간과 상관없이 지금의 HEAD가 과거에 어디 위치해 있었는지 파악하는데 아주 유용하다
+  브랜치를 자주 옮겨 다니는 작업을 하면서 어떤 이름을 잊거나, 
+  실수로 브랜치를 지운 경우에도 남아있어서 이를 참조할 수 있습니다.
