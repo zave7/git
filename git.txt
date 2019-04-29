@@ -136,6 +136,9 @@ git add -p
 git add -A
 - add changes from all tracked and untracked files
 
+git reset HEAD [file]
+- git add한 파일 취소
+  뒤에 파일명이 없으면 add한 파일 전체를 취소
 
 ·······························
 ··········· commit ············		(커밋)
@@ -163,6 +166,9 @@ git commit --amend
   이미 해당 커밋을 push 하였다면 에러 발생
   git push --force 옵션으로 푸시 가능
   하지만 이미 push한 커밋을 수정하여 강제로 push하는 것은 코드를 공유해 작업하는 동료들에게 오류를 일으킬 수 있다
+
+git reset [--soft][--mixed][--hard]HEAD^
+- 커밋 취소(3가지 옵션)
 
 ·······························
 ············ log ··············		(로그)
@@ -562,6 +568,13 @@ git reset --soft
 	- > 다시 ‘text2.txt’ 파일을 git add text2.txt
 	- > git reset --soft 이전커밋id
 	- > ‘text.txt’, ‘text2.txt’ 파일 모두 git status를 확인 해보면 add된 상태를 확인할수 있다.
+
+git reset [--soft][--mixed][--hard]HEAD^
+- 커밋 취소(3가지 옵션)
+
+git reset HEAD [file]
+- git add한 파일 취소
+  뒤에 파일명이 없으면 add한 파일 전체를 취소
 
 ·······························
 ··········· revert ············		(리버트)
