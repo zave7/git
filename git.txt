@@ -681,7 +681,126 @@ git config --global --add difftool.kdiff3.trustExitCode false
 git rebase -i 
 - 커밋의 이름이나 관련 이름을 부여할 수 있다
 - 충돌이 발생했을 경우, 유저가 해결한 후에 add하고 git rebase --continue를 해주면 순차적으로 마저 진행된다.(commit 안해도된다)
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+		커밋 히스토리 단장 (집중)
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+git에서 여러개의 commit들을 하나로 합치고 싶을 때가 있다.
+이 작업은 일반적으로 Squash 라고 불린다
 
+- Squash -
+commit을 squash 하려면 interactive rebase를 실행한다.
+git rebase -i HEAD~2
+- HEAD~2는 HEAD로부터 2개의 commit 을 의미한다
+
+$ git rebase -i HEAD~2 // HEAD~2는 HEAD로부터 2개의 commit 을 의미한다
+-----------------------------------------------------------------------
+▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽
+
+pick 9e67594 Add title to a.md
+pick e5af3cb Bye // 이 라인의 pick 을 squash 로 변경
+
+# Rebase be86009..e5af3cb onto be86009 (2 command(s))
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+
+△ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △
+-----------------------------------------------------------------------
+아래 주석은 rebase 사용에 대한 내용이고, 위의 두 줄을 보면 시간 순서대로 commit 이 나열되어있다.
+
+앞의 9e67594 commit 이 주가 되고 뒤에 있는 e5af3cd commit 을 합쳐버릴 것이기 때문에 
+e5af3cd 앞에 있는 pick 을 squash 로 변경하고 :x (vi 에서 저장하고 나가기) 로 종료한다.
+
+그러면 아래와 같은 내용이 출력된다.
+-----------------------------------------------------------------------
+▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽
+
+# This is a combination of 2 commits.
+# The first commit's message is:
+
+Add title to a.md
+
+# This is the 2nd commit message:
+
+Bye
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Jun 21 15:35:19 2016 +0900
+#
+# interactive rebase in progress; onto be86009
+# Last commands done (2 commands done):
+#    pick 9e67594 Add title to a.md
+#    squash e5af3cb Bye
+# No commands remaining.
+# You are currently editing a commit while rebasing branch 'master' on 'be86009'.
+#
+# Changes to be committed:
+#       modified:   a.md
+
+△ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △
+-----------------------------------------------------------------------
+여기서 두 commit 을 합쳐서 생긴 새 commit 의 message 를 작성할 수 있다.
+
+저 부분에서 주석 빼고는 다 message 에 들어가기 때문에 지금은
+
+Add title to a.md
+Bye
+
+라고 작성이 될 것이고, 바꾸고 싶으면 원하는 대로 편집하면 된다.
+앞에서처럼 작성하고 나가면 아래와 같은 결과가 출력되며 commit 이 합쳐진 것을 확인할 수 있다.
+-----------------------------------------------------------------------
+▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽
+
+[detached HEAD 66ba47b] New commit! // 새로 작성한 commit message
+ Date: Tue Jun 21 15:35:19 2016 +0900
+ 1 file changed, 2 insertions(+)
+Successfully rebased and updated refs/heads/master.
+
+△ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △
+-----------------------------------------------------------------------
+Remote repository 에 squash 한 commit push 하기
+
+
+아무도 squash 한 commit 들을 pull 하지 않았다는 가정 하에 이 작업이 수행되어야 한다. 
+누군가 이미 해당 commit 들을 pull 했는데 그것을 rebase 를 통해 수정하고 commit 하면 큰일 날 수 있다.
+이미 remote repository 에 squash 하지 않은 commit들을 push 했을 경우, squash 한 commit 을 push 하면 거부 당한다.
+
+위에 얘기한 대로 다른 사람이 이미 변경 전 commit 들을 pull 한 경우 꼬여버릴 수 있기 때문이다.
+
+
+
+대표적으로 이러한 squash 작업이 필요한 경우가 Open Source repository 를 fork 해서 
+수정한 후에 pull request 를 날렸는데 수정요청이 들어올 때이다.
+
+Pull request 가 여러개의 commit 으로 이루어지게 되면 중간에 완성되지 않은 commit 이 존재하는 것이기 때문에 관리상에 어려움이 생길 수 있다. 
+이를 방지하기 위해 squash 를 통해 제대로 동작하는 하나의 commit 으로 만들어 주는 것이 좋다.
+
+Fork 해온 repository 는 어짜피 나만 수정하는 것이기 때문에 아무도 pull 을 해갔을리 없으니 꼬일 걱정 없이 강제로 push 할 수 있다.
+-----------------------------------------------------------------------
+▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽ ▽
+$ git push origin <branch-name> --force 
+- 강제 푸쉬
+△ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △ △
+-----------------------------------------------------------------------
+참고 사이트 : https://json.postype.com/post/209499
+■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
 ·······························
 ··········· reflog ············		(레프로그)
 ·······························
