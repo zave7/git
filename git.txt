@@ -301,12 +301,17 @@ git branch [branch-name]
 git branch -d [branch-name]
 - 브랜치 삭제
 
+git branch --delete [branch-name]
+- 브랜치 삭제
+
 git branch -D [branch-name]
 - 병합하지 않은 브랜치를 강제 삭제
 
 git branch -a 
 - 현재 생성된 모든 local branch와 remote branch 확인
 
+git branch --set-upstream-to origin/feature-01
+- branch 연동
 ·······························
 ··········· checkout ··········		(체크아웃)
 ·······························
@@ -389,6 +394,8 @@ git push -u [remote-name] [local-branch]
 git push --set-upstream [remote-name] [local-branch]
 - 브랜치를 추적하도록 해서, 이후에 git push 만 입력해도 push 가능
 
+git push origin :branch-name
+- origin 원격 저장소의 해당이름의 브랜치 삭제
 
 ·······························
 ··········· clone ·············		(저장소 복제)
@@ -590,6 +597,9 @@ git stash -u
 git stash --patch
 - 수정된 모든 사항을 저장하지 않는 대신
   대화형 프롬프트가 뜨며 변경된 데이터 중 저장할 것과 저장하지 않을 것을 지정
+
+git stash pop [--index]
+- 적용과 동시에 스태쉬 리스트에서 삭제
 ·······························
 ············ reset ············		(리셋)
 ·······························
