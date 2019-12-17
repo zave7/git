@@ -160,6 +160,55 @@ git config --list
 - 설정한 모든것을 보여준다
 
 ·······························
+········· .gitconfig ··········		(환경설정)
+·······························
+
+ex) .gitconfig
+	[core]
+		filemode = true
+		editor = vim
+	
+	[user]
+		name = musclebear
+		email = musclebear@도메인
+		
+	[color]
+		ui = auto
+		
+	[color "branch"]
+		current = yellow bold
+		local = green bold
+		remote = cyan bold
+		
+	[alias]
+		co = checkout
+		br = branch
+		ci = commit
+		st = status
+		glog = log --graph --oneline --decorate --date=relative --all
+		dt = difftool
+		d = diff
+		
+	[push]
+		default = simple
+
+이런식으로 config 커맨드로 설정이 가능하다
+	git config --global user.name "Your Name"
+	git config --global user.email you@yourdomain.example.com
+	git config --global alias.ci "commit -a"
+	git config --global alias.co checkout
+	git config --global alias.st "status -a"
+	git config --global alias.stat "status -a"
+	git config --global alias.br branch
+	git config --global alias.wdiff "diff --color-words"
+	git config --global core.editor vim
+	git config --global merge.summary true
+
+참고 사이트
+https://gamdekong.tistory.com/19
+https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-config.html
+
+·······························
 ··········· status ············		(상태)
 ·······························
 「」
