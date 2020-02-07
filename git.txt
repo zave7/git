@@ -571,6 +571,16 @@ git push origin :v1.0.0
 
 	# doc 디렉토리 아래의 모든 .pdf 파일을 무시
 	doc/**/*.pdf
+	
+	# /src 디렉토리 및 하위 디렉토리를 제외한 모든 디렉토리 및 파일을 무시
+	/*
+	!/src/
+	
+	# .svn 파일 제외
+	/**/.svn
+	
+	# pom.xml 살리기
+	!pom.xml
 
 cat .gitignore
 ※ .gitignore File을 만들고 commit하면 적용된다.
