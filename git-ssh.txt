@@ -9,3 +9,17 @@
 	2. $ cat ~/.ssh/id_rsa.pub
 		- 다음은 사용자가 자신의 공개키를 Git 서버 관리자에게 보내야 한다.
 			사용자는 .pub 파일의 내용을 복사하여 이메일을 보내기만 하면 된다.
+
+# ~/.ssh/config 파일 작성
+	
+	1. 기본 작성 방법
+	
+		host [host] //host 도메인 or ip
+		 HostName [host] //host 도메인 or ip
+		 IdentityFile ~/.ssh/id_rsa_test //private key 위치
+		 User git // git
+		 
+# ssh private key clone 방법
+	GIT_SSH_COMMAND="ssh -i {key-file-path}" git clone ssh://git@git.dreamer.co.kr:2222/coding-test/youngchankwon.git
+	ex) 
+		GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_test" git clone ssh://git@git.dreamer.co.kr:2222/coding-test/youngchankwon.git
