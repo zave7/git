@@ -1,14 +1,14 @@
 # Git Study
-   ## Area 
+   ## # Area 
       - Working Directory, Respository, Index, Stash
-   ## Local
-      - init, rm, status, add, commit, log, diff, branch, checkout, fetch, merge, rebase, tag, stash, reset, revert, 
-        reflog, clean
-   ## Remote
+   ## # Local
+      - init, rm, status, add, commit, log, diff, branch, checkout, fetch, merge, rebase, tag, stash, 
+        reset, revert, reflog, clean
+   ## # Remote
       - clone, pull, push
-   ## Config
+   ## # Config
       - config, apply
-   ## Ignore
+   ## # Ignore
       - .gitignore
-   ## Tool(merge,diff)
+   ## # Tool(merge,diff)
       - kdiff3
